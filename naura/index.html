@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAURA — Accesorios de cuero hechos a mano</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- CSS (el orden importa) -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/animaciones.css">
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+
+    <!-- Hero: presentación principal, con elementos decorativos flotantes -->
+    <section class="hero">
+      <!-- Formas decorativas de fondo (puramente visuales) -->
+      <div class="hero__decoracion" aria-hidden="true">
+        <div class="forma forma--anillo-grande"></div>
+        <div class="forma forma--anillo-chico"></div>
+        <div class="forma forma--circulo"></div>
+        <div class="forma forma--circulo-chico"></div>
+      </div>
+
+      <div class="hero__contenido contenedor">
+        <h1 class="hero__logo">NAURA</h1>
+        <span class="logo-linea"></span>
+        <p class="hero__subtitulo">Accesorios de cuero hechos a mano, pieza por pieza.</p>
+        <a href="productos.html" class="boton-principal">Ver productos</a>
+      </div>
+    </section>
+
+
+
+    <!-- Destacados: teaser de productos (placeholder, se conecta a Sheets después) -->
+    <section class="destacados contenedor">
+      <h2 class="reveal">Nuestros favoritos</h2>
+      <div class="destacados__grid">
+        <!-- TODO: reemplazar por productos reales cuando conectemos Google Sheets también acá -->
+        <div class="tarjeta-producto reveal">
+          <img src="img/placeholder-producto.jpg" alt="Producto de cuero NAURA">
+          <h3>Nombre del producto</h3>
+          <p>$ 0.000</p>
+        </div>
+        <div class="tarjeta-producto reveal reveal--delay-1">
+          <img src="img/placeholder-producto.jpg" alt="Producto de cuero NAURA">
+          <h3>Nombre del producto</h3>
+          <p>$ 0.000</p>
+        </div>
+        <div class="tarjeta-producto reveal reveal--delay-2">
+          <img src="img/placeholder-producto.jpg" alt="Producto de cuero NAURA">
+          <h3>Nombre del producto</h3>
+          <p>$ 0.000</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre la marca: teaser, con link a la página completa -->
+    <section class="marca-teaser contenedor reveal">
+      <h2>Hecho a mano, con cuero real</h2>
+      <p>
+        Cada pieza NAURA está hecha a mano, cuidando cada detalle del proceso.
+        <!-- TODO: reemplazar con la bajada real de marca -->
+      </p>
+      <a href="sobre-naura.html">Conocer más →</a>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/components.js"></script>
+  <script src="js/animaciones.js"></script>
+</body>
+<!-- ============ INTRO NAURA ============ -->
+<div class="intro-naura" id="intro-naura">
+
+  <div class="intro-naura__marca">
+
+    <div class="intro-naura__logo" aria-label="NAURA">
+      <span>N</span>
+      <span>A</span>
+      <span>U</span>
+      <span>R</span>
+      <span>A</span>
+    </div>
+
+  </div>
+
+</div>

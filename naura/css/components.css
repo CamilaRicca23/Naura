@@ -1,0 +1,114 @@
+/* ============================================
+   NAURA — components.css
+   Estilos del header y footer reutilizables
+   Depende de variables.css y base.css (importar antes)
+   ============================================ */
+
+/* ============ HEADER ============ */
+
+.header {
+  background-color: var(--color-fondo);
+  border-bottom: 1px solid rgba(43, 43, 43, 0.1);
+  padding: var(--espacio-sm) 0;
+}
+
+.header__contenido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.75rem;
+  color: var(--color-marron);
+  letter-spacing: 0.05em;
+}
+
+.header__nav .header__lista {
+  display: flex;
+  gap: var(--espacio-md);
+}
+
+.header__nav a {
+  font-family: var(--fuente-texto);
+  font-size: var(--tamano-pequeno);
+  text-transform: uppercase;
+  letter-spacing: var(--espaciado-letras);
+  color: var(--color-marron);
+}
+
+.header__nav a:hover {
+  color: var(--color-marron);
+}
+
+.header__menu-toggle {
+  display: none;
+}
+
+/* ============ FOOTER ============ */
+
+.footer {
+  background-color: var(--color-marron);
+  color: var(--color-fondo);
+  padding: var(--espacio-lg) 0 var(--espacio-md);
+  margin-top: var(--espacio-xl);
+}
+
+.footer__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--espacio-md);
+}
+
+.footer__logo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.5rem;
+  color: var(--color-fondo);
+}
+
+.footer .texto-etiqueta {
+  color: var(--color-fondo);
+  opacity: 0.8;
+}
+
+.footer__nav .footer__lista {
+  display: flex;
+  gap: var(--espacio-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer__nav a {
+  font-size: var(--tamano-pequeno);
+  color: var(--color-fondo);
+  opacity: 0.9;
+}
+
+.footer__nav a:hover {
+  opacity: 1;
+  color: var(--color-fondo);
+  text-decoration: underline;
+}
+
+.footer__copy {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* ============ RESPONSIVE (mobile) ============ */
+
+@media (max-width: 700px) {
+  .header__contenido {
+    flex-direction: column;
+    gap: var(--espacio-sm);
+  }
+
+  .header__nav .header__lista {
+    gap: var(--espacio-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

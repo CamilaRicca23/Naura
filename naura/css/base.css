@@ -1,0 +1,89 @@
+/* ============================================
+   NAURA — Base CSS
+   Reset + estilos globales del sitio
+   Depende de variables.css (importar antes que este archivo)
+   ============================================ */
+
+/* --- Reset básico --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Estilos globales del body --- */
+body {
+  background-color: var(--color-fondo);
+  font-family: var(--fuente-texto);
+  color: var(--color-marron);
+  font-size: var(--tamano-texto);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* --- Títulos --- */
+h1, h2, h3, h4 {
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--tamano-logo);
+}
+
+h2 {
+  font-size: var(--tamano-titulo);
+}
+
+h3 {
+  font-size: var(--tamano-subtitulo);
+}
+
+/* --- Enlaces --- */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: var(--color-marron);
+}
+
+/* --- Listas --- */
+ul, ol {
+  list-style: none;
+}
+
+/* --- Imágenes --- */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* --- Botones (base, se puede refinar en components.css) --- */
+button {
+  font-family: var(--fuente-texto);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* --- Texto en mayúsculas espaciado, para etiquetas tipo "100% CUERO" --- */
+.texto-etiqueta {
+  text-transform: uppercase;
+  letter-spacing: var(--espaciado-letras);
+  font-size: var(--tamano-pequeno);
+  color: var(--color-verde);
+}
+
+/* --- Contenedor genérico para centrar contenido --- */
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--espacio-md);
+}

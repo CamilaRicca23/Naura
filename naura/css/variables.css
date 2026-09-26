@@ -1,0 +1,37 @@
+/* ============================================
+   NAURA — Variables globales de diseño
+   Basado en el logo/identidad de marca
+   ============================================ */
+
+:root {
+  /* --- Colores --- */
+  --color-fondo: #F7F1E8;        /* crema, fondo principal del sitio */
+  --color-marron: #412e20;       /* terracota/cuero, color principal de marca (logo, acentos) */
+  --color-verde: #6E8574;        /* verde salvia, detalles y etiquetas ("100% CUERO") */
+  --color-blanco: #FFFFFF;       /* blanco puro, para contraste sobre marrón si hace falta */
+
+  /* --- Tipografías --- */
+  --fuente-titulo: 'Fraunces', serif;      /* logo, títulos, nombres de producto — alternativa gratuita a TAN Pearl */
+  --fuente-texto: 'Montserrat', sans-serif;         /* cuerpo de texto, botones, etiquetas */
+
+  /* --- Tamaños de fuente --- */
+  --tamano-logo: 3rem;
+  --tamano-titulo: 2rem;
+  --tamano-subtitulo: 1.25rem;
+  --tamano-texto: 1rem;
+  --tamano-pequeno: 0.85rem;
+
+  /* --- Espaciado --- */
+  --espacio-xs: 0.5rem;
+  --espacio-sm: 1rem;
+  --espacio-md: 2rem;
+  --espacio-lg: 4rem;
+  --espacio-xl: 6rem;
+
+  /* --- Bordes --- */
+  --radio-borde: 8px;
+  --radio-borde-chico: 4px;
+
+  /* --- Letter spacing (para el estilo "kerneado" de los subtítulos) --- */
+  --espaciado-letras: 0.15em;
+}

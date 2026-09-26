@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos — NAURA</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- CSS (el orden importa) -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="hero contenedor" style="padding-top: var(--espacio-lg); padding-bottom: var(--espacio-md);">
+      <p class="texto-etiqueta">Catálogo</p>
+      <h1 style="font-size: 2.5rem;">Nuestros productos</h1>
+    </section>
+
+    <section class="filtros contenedor">
+      <button class="filtro-boton filtro-boton--activo" data-categoria="todos">Todos</button>
+      <button class="filtro-boton" data-categoria="cuero">Cuero</button>
+      <button class="filtro-boton" data-categoria="accesorios">Accesorios</button>
+    </section>
+
+    <section class="destacados contenedor">
+      <p id="estado-productos" style="text-align: center; color: var(--color-marron);">Cargando productos...</p>
+      <div id="grilla-productos" class="destacados__grid"></div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/components.js"></script>
+  <script src="js/sheets.js"></script>
+  <script src="js/productos.js"></script>
+</body>
+</html>

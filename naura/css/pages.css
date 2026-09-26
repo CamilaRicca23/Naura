@@ -1,0 +1,148 @@
+/* ============================================
+   NAURA — pages.css
+   Estilos específicos de cada página
+   Depende de variables.css, base.css y components.css
+   ============================================ */
+
+/* ============ HERO (Inicio) ============ */
+
+.hero {
+  text-align: center;
+  padding: var(--espacio-xl) var(--espacio-md);
+}
+
+.hero h1 {
+  font-size: 4rem;
+  color: var(--color-marron);
+  margin: var(--espacio-sm) 0;
+}
+
+.hero__subtitulo {
+  font-size: var(--tamano-subtitulo);
+  color: var(--color-marron);
+  margin-bottom: var(--espacio-md);
+}
+
+/* ============ BOTONES ============ */
+
+.boton-principal {
+  display: inline-block;
+  background-color: var(--color-marron);
+  color: var(--color-fondo) !important;
+  padding: var(--espacio-xs) var(--espacio-md);
+  border-radius: var(--radio-borde);
+  font-family: var(--fuente-texto);
+  font-size: var(--tamano-pequeno);
+  text-transform: uppercase;
+  letter-spacing: var(--espaciado-letras);
+  transition: opacity 0.2s ease;
+}
+
+.boton-principal:hover {
+  opacity: 0.85;
+  color: var(--color-fondo) !important;
+}
+
+/* ============ FILTROS DE CATEGORÍA ============ */
+
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: var(--espacio-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--espacio-lg);
+}
+
+.filtro-boton {
+  font-family: var(--fuente-texto);
+  font-size: var(--tamano-pequeno);
+  text-transform: uppercase;
+  letter-spacing: var(--espaciado-letras);
+  padding: var(--espacio-xs) var(--espacio-md);
+  border: 1px solid var(--color-marron);
+  border-radius: var(--radio-borde);
+  background-color: transparent;
+  color: var(--color-marron);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filtro-boton:hover {
+  background-color: rgba(138, 62, 42, 0.08);
+}
+
+.filtro-boton--activo {
+  background-color: var(--color-marron);
+  color: var(--color-fondo);
+}
+
+.destacados__vacio {
+  text-align: center;
+  color: var(--color-marron);
+  grid-column: 1 / -1;
+}
+
+/* ============ DESTACADOS (grilla de productos) ============ */
+
+.destacados {
+  padding: var(--espacio-lg) var(--espacio-md);
+  text-align: center;
+}
+
+.destacados h2 {
+  margin-bottom: var(--espacio-md);
+}
+
+.destacados__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--espacio-md);
+  text-align: left;
+}
+
+.tarjeta-producto {
+  background-color: var(--color-blanco);
+  border-radius: var(--radio-borde);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.tarjeta-producto:hover {
+  transform: translateY(-4px);
+}
+
+.tarjeta-producto img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background-color: rgba(43, 43, 43, 0.05); /* placeholder gris mientras no hay imagen */
+}
+
+.tarjeta-producto h3 {
+  font-size: 1rem;
+  margin: var(--espacio-xs) var(--espacio-xs) 0;
+}
+
+.tarjeta-producto p {
+  margin: 0 var(--espacio-xs) var(--espacio-sm);
+  color: var(--color-marron);
+  font-weight: 500;
+}
+
+/* ============ MARCA TEASER (Inicio) ============ */
+
+.marca-teaser {
+  text-align: center;
+  padding: var(--espacio-lg) var(--espacio-md);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.marca-teaser p {
+  margin: var(--espacio-sm) 0;
+}
+
+.marca-teaser a {
+  color: var(--color-marron);
+  font-weight: 500;
+}
