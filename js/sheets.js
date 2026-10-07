@@ -58,11 +58,23 @@ function dividirFilaCSV(fila) {
  */
 function convertirLinkDrive(linkDrive) {
   if (!linkDrive) return '';
-  const match = linkDrive.match(/\/d\/(.+?)\//);
-  if (match && match[1]) {
-    return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
+
+  const link = String(linkDrive).trim();
+
+  // Formato: https://drive.google.com/file/d/ID/view
+  let match = link.match(/\/file\/d\/([^/]+)/);
+
+  // Formato: https://drive.google.com/open?id=ID
+  if (!match) {
+    match = link.match(/[?&]id=([^&]+)/);
   }
-  return linkDrive;
+
+  if (match && match[1]) {
+    const id = match[1];
+    return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
+  }
+
+  return link;
 }
 
 /**
