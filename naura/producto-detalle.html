@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Producto — NAURA</title>
+
+  <link rel="icon" type="image/png" href="img/img_logo.png">
+  <!-- Google Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Montserrat:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="css/variables.css">
+
+  <link rel="stylesheet" href="css/base.css">
+
+  <link rel="stylesheet" href="css/components.css">
+
+  <link rel="stylesheet" href="css/pages.css">
+
+</head>
+
+
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+
+    <section class="detalle-producto contenedor">
+
+      <a href="productos.html" class="detalle-producto__volver">
+        ← Volver a productos
+      </a>
+      <!-- Estado de carga -->
+
+      <p id="estado-detalle">
+        Cargando producto...
+      </p>
+
+
+      <!-- Producto -->
+
+      <div id="producto-detalle" class="detalle-producto__grid" hidden>
+
+        <div class="detalle-producto__galeria">
+
+          <button class="galeria-flecha galeria-flecha--izquierda" id="galeria-anterior" type="button"
+            aria-label="Imagen anterior">
+            ‹
+          </button>
+
+          <div class="galeria-producto__ventana">
+            <div id="galeria-producto" class="galeria-producto__pista">
+            </div>
+          </div>
+
+          <button class="galeria-flecha galeria-flecha--derecha" id="galeria-siguiente" type="button"
+            aria-label="Imagen siguiente">
+            ›
+          </button>
+
+        </div>
+
+
+        <!-- INFORMACIÓN -->
+
+        <div class="detalle-producto__info">
+
+
+          <p id="producto-categoria" class="texto-etiqueta"></p>
+
+
+          <h1 id="producto-nombre"></h1>
+
+
+          <p id="producto-precio" class="detalle-producto__precio"></p>
+
+
+          <p id="producto-descripcion" class="detalle-producto__descripcion"></p>
+
+          <div class="detalle-producto__entrega">
+
+            <span class="detalle-producto__entrega-titulo">
+              Entrega
+            </span>
+
+            <p id="producto-entrega"></p>
+
+          </div>
+
+
+          <!-- WHATSAPP -->
+
+          <a id="boton-whatsapp" class="boton-principal" href="#" target="_blank" rel="noopener noreferrer">
+            Consultar por WhatsApp
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <div id="footer-placeholder"></div>
+
+
+  <script src="js/components.js"></script>
+
+  <script src="js/sheets.js"></script>
+
+  <script src="js/producto-detalle.js"></script>
+
+
+</body>
+
+</html>

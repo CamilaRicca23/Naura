@@ -7,7 +7,7 @@
 /* ============ HEADER ============ */
 
 .header {
-  background-color: var(--color-fondo);
+  background-color: var(--color-verde1);
   border-bottom: 1px solid rgba(43, 43, 43, 0.1);
   padding: var(--espacio-sm) 0;
 }
@@ -19,9 +19,9 @@
 }
 
 .header__logo {
-  font-family: var(--fuente-titulo);
-  font-size: 1.75rem;
-  color: var(--color-marron);
+  font-family: var(--fuente-marca);
+  font-size: 2rem;
+  color: var(--color-bordo);
   letter-spacing: 0.05em;
 }
 
@@ -35,11 +35,11 @@
   font-size: var(--tamano-pequeno);
   text-transform: uppercase;
   letter-spacing: var(--espaciado-letras);
-  color: var(--color-marron);
+  color: var(--color-bordo);
 }
 
 .header__nav a:hover {
-  color: var(--color-marron);
+  color: var(--color-bordo);
 }
 
 .header__menu-toggle {
@@ -49,9 +49,9 @@
 /* ============ FOOTER ============ */
 
 .footer {
-  background-color: var(--color-marron);
+  background-color: var(--color-bordo);
   color: var(--color-fondo);
-  padding: var(--espacio-lg) 0 var(--espacio-md);
+  padding: 20px 0;
   margin-top: var(--espacio-xl);
 }
 
@@ -64,7 +64,7 @@
 }
 
 .footer__logo {
-  font-family: var(--fuente-titulo);
+  font-family: var(--fuente-marca);
   font-size: 1.5rem;
   color: var(--color-fondo);
 }

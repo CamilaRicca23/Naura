@@ -41,54 +41,6 @@
   z-index: 1;
 }
 
-/* ============ Formas decorativas ============ */
-
-.forma {
-  position: absolute;
-  border-radius: 50%;
-}
-
-.forma--anillo-grande {
-  top: 50%;
-  left: 50%;
-  width: 480px;
-  height: 480px;
-  margin: -240px 0 0 -240px;
-  border: 1.5px solid var(--color-marron);
-  opacity: 0.15;
-  animation: girar 60s linear infinite;
-}
-
-.forma--anillo-chico {
-  top: 50%;
-  left: 50%;
-  width: 280px;
-  height: 280px;
-  margin: -140px 0 0 -140px;
-  border: 1px dashed var(--color-verde);
-  opacity: 0.25;
-  animation: girar 40s linear infinite reverse;
-}
-
-.forma--circulo {
-  top: 18%;
-  right: 14%;
-  width: 40px;
-  height: 40px;
-  background-color: var(--color-marron);
-  opacity: 0.5;
-  animation: flotar 5.5s ease-in-out infinite;
-}
-
-.forma--circulo-chico {
-  bottom: 22%;
-  left: 12%;
-  width: 22px;
-  height: 22px;
-  background-color: var(--color-verde);
-  opacity: 0.4;
-  animation: flotar 6s ease-in-out infinite 0.8s;
-}
 
 /* ============ Keyframes ============ */
 
@@ -132,7 +84,7 @@ body.intro-activa {
   align-items: center;
   justify-content: center;
 
-  background-color: var(--color-fondo);
+  background-color: var(--color-verde1);
 
   z-index: 9999;
   overflow: hidden;
@@ -155,7 +107,7 @@ body.intro-activa {
 .intro-naura__logo {
   display: flex;
 
-  font-family: var(--fuente-titulo);
+  font-family: var(--fuente-marca);
   font-size: clamp(5rem, 13vw, 11rem);
   font-weight: 400;
 
@@ -163,7 +115,7 @@ body.intro-activa {
   line-height: 1.15;
   letter-spacing: -0.065em;
 
-  color: var(--color-marron);
+  color: var(--color-bordo);
 
   /* Espacio extra para los extremos de las letras */
   padding: 0.12em 0.08em 0.18em;
@@ -224,7 +176,7 @@ body.intro-activa {
   letter-spacing: 0.6em;
   padding-left: 0.6em;
 
-  color: var(--color-marron);
+  color: var(--color-bordo);
 
   opacity: 0;
   transform: translateY(12px);

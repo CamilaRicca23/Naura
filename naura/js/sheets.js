@@ -70,18 +70,53 @@ function convertirLinkDrive(linkDrive) {
  * Devuelve una Promise con el array de productos ya listo para usar.
  */
 function obtenerProductos() {
+
   return fetch(URL_HOJA_PRODUCTOS)
+
     .then(respuesta => {
-      if (!respuesta.ok) throw new Error('No se pudo leer la hoja de productos');
+
+      if (!respuesta.ok) {
+        throw new Error('No se pudo leer la hoja de productos');
+      }
+
       return respuesta.text();
+
     })
+
     .then(textoCSV => parsearCSV(textoCSV))
+
     .then(productos =>
       productos
-        .filter(p => p.disponible && p.disponible.toLowerCase() === 'si')
+
+        // Solo productos disponibles
+        .filter(
+          p =>
+            p.disponible &&
+            p.disponible.toLowerCase() === 'si'
+        )
+
+        // Convertimos todas las imágenes de Drive
         .map(p => ({
           ...p,
+
           imagen: convertirLinkDrive(p.imagen),
+          imagen2: convertirLinkDrive(p.imagen2),
+          imagen3: convertirLinkDrive(p.imagen3),
+          imagen4: convertirLinkDrive(p.imagen4)
+
         }))
     );
+
+}
+
+function obtenerPrecioProducto(producto) {
+
+  const desde = producto.precio;
+  const hasta = producto.precio_hasta;
+
+  if (desde && hasta) {
+    return `$ ${desde} - $ ${hasta}`;
+  }
+
+  return `$ ${desde}`;
 }

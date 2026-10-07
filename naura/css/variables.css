@@ -3,16 +3,29 @@
    Basado en el logo/identidad de marca
    ============================================ */
 
+@font-face {
+  font-family: 'TAN Pearl';
+  src: url('../fonts/TAN-Pearl-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* --- Colores --- */
-  --color-fondo: #F7F1E8;        /* crema, fondo principal del sitio */
-  --color-marron: #412e20;       /* terracota/cuero, color principal de marca (logo, acentos) */
-  --color-verde: #6E8574;        /* verde salvia, detalles y etiquetas ("100% CUERO") */
-  --color-blanco: #FFFFFF;       /* blanco puro, para contraste sobre marrón si hace falta */
+  --color-fondo: #d2e3b2;
+  --color-verde: #6E8574;
+  --color-blanco: #FFFFFF;
+  --color-verde1: #d2e3b2;
+  --color-bordo: #732d1d;
+  /* blanco puro, para contraste sobre marrón si hace falta */
 
   /* --- Tipografías --- */
-  --fuente-titulo: 'Fraunces', serif;      /* logo, títulos, nombres de producto — alternativa gratuita a TAN Pearl */
-  --fuente-texto: 'Montserrat', sans-serif;         /* cuerpo de texto, botones, etiquetas */
+  --fuente-marca: 'TAN Pearl', 'Fraunces', serif;
+  --fuente-titulo: 'Fraunces', serif;
+  /* logo, títulos, nombres de producto — alternativa gratuita a TAN Pearl */
+  --fuente-texto: 'Fraunces', serif;
+  /* cuerpo de texto, botones, etiquetas */
 
   /* --- Tamaños de fuente --- */
   --tamano-logo: 3rem;
