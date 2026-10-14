@@ -1097,6 +1097,24 @@
 /* CELULARES */
 
 @media (max-width: 768px) {
+
+  .hero-visual {
+    height: auto;
+    min-height: 0;
+    padding: 15px 0 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .hero-visual__ventana {
+    margin-top: 0;
+  }
+
+  .hero-visual__contenido {
+    margin-top: 25px;
+  }
+
   .sobre-naura__intro {
     min-height: 0;
     padding: 65px 20px;
