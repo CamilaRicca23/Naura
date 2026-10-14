@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     intro.classList.add('intro-naura--salir');
 
-  }, 1900);
+  }, 1000);
 
 
   // Eliminamos completamente la intro
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.body.classList.remove('intro-activa');
 
-  }, 3100);
+  }, 2000);
 
 });
 /* ============================================

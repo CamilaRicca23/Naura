@@ -763,3 +763,355 @@
   }
 
 }
+
+.detalle-producto__pago {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.detalle-producto__enlace {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--color-bordo);
+  font-family: var(--fuente-texto);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.detalle-producto__enlace:hover {
+  opacity: 0.7;
+}
+
+
+/* ============================================
+   SOBRE NAURA
+   ============================================ */
+
+.sobre-naura {
+  color: var(--color-texto);
+}
+
+/* Presentación */
+
+.sobre-naura__intro {
+  padding-top: 85px;
+  padding-bottom: 95px;
+  text-align: center;
+}
+
+.sobre-naura__etiqueta {
+  margin-bottom: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sobre-naura h1,
+.sobre-naura h2 {
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+}
+
+.sobre-naura h1 {
+  margin-bottom: 35px;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+}
+
+.sobre-naura h2 {
+  margin-bottom: 20px;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.sobre-naura__presentacion {
+  max-width: 660px;
+  margin: 0 auto 35px;
+}
+
+.sobre-naura__presentacion p {
+  margin-bottom: 18px;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+/* Secciones generales */
+
+.sobre-naura__seccion {
+  padding: 85px 0;
+  scroll-margin-top: 90px;
+}
+
+.sobre-naura__seccion--alternativa {
+  background-color: var(--color-fondo);
+}
+
+.sobre-naura__encabezado {
+  max-width: 650px;
+  margin: 0 auto 45px;
+  text-align: center;
+}
+
+.sobre-naura__encabezado > p:last-child {
+  line-height: 1.7;
+}
+
+/* Bancos */
+
+.sobre-naura__bancos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.sobre-naura__banco {
+  min-width: 0;
+  padding: 28px;
+  background-color: var(--color-blanco);
+  border: 1px solid rgba(65, 46, 32, 0.12);
+  border-radius: var(--radio-borde);
+}
+
+.sobre-naura__banco-identidad {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.sobre-naura__banco-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sobre-naura__banco-identidad h3 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+}
+
+.sobre-naura__banco-identidad p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.sobre-naura__banco-cuenta {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sobre-naura__banco-etiqueta {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.sobre-naura__banco-numero {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.sobre-naura__copiar {
+  align-self: flex-start;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: var(--radio-borde-chico);
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.sobre-naura__copiar:hover:not(:disabled) {
+  opacity: 0.6;
+}
+
+.sobre-naura__copiar:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sobre-naura__nota {
+  max-width: 650px;
+  margin: 30px auto 0;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* Entregas */
+
+.sobre-naura__entregas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.sobre-naura__entrega {
+  padding: 30px;
+  border: 1px solid rgba(65, 46, 32, 0.15);
+  border-radius: var(--radio-borde);
+}
+
+.sobre-naura__entrega-icono {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 20px;
+}
+
+.sobre-naura__entrega-icono svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sobre-naura__entrega h3 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.sobre-naura__entrega p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* Consulta */
+
+.sobre-naura__consulta {
+  margin-top: 65px;
+  text-align: center;
+}
+
+.sobre-naura__consulta h3 {
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+}
+
+.sobre-naura__consulta p {
+  margin-bottom: 25px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .sobre-naura__bancos,
+  .sobre-naura__entregas {
+    grid-template-columns: 1fr;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .sobre-naura__intro {
+    padding: 55px 20px 65px;
+  }
+
+  .sobre-naura__seccion {
+    padding: 60px 0;
+  }
+
+  .sobre-naura__encabezado {
+    margin-bottom: 30px;
+  }
+
+  .sobre-naura__banco,
+  .sobre-naura__entrega {
+    padding: 22px;
+  }
+
+  .sobre-naura__presentacion p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .sobre-naura__consulta {
+    margin-top: 45px;
+  }
+}
+
+/* ============================================
+   SOBRE NAURA - FOTO DE FONDO
+   ============================================ */
+
+.sobre-naura__intro {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 650px;
+  padding: 80px 20px;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.65)
+    ),
+    url("../img/foto-fondo.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  text-align: center;
+  color: white;
+}
+
+.sobre-naura__intro-contenido {
+  position: relative;
+  z-index: 1;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.sobre-naura__intro h1,
+.sobre-naura__intro p,
+.sobre-naura__intro .sobre-naura__etiqueta {
+  color: var(--color-verde1);
+}
+
+.sobre-naura__intro h1 {
+  margin-bottom: 30px;
+}
+
+.sobre-naura__intro .sobre-naura__presentacion {
+  max-width: 650px;
+  margin: 0 auto 35px;
+}
+
+.sobre-naura__intro .sobre-naura__presentacion p {
+  line-height: 1.8;
+}
+
+/* CELULARES */
+
+@media (max-width: 768px) {
+  .sobre-naura__intro {
+    min-height: 0;
+    padding: 65px 20px;
+    background-position: center;
+  }
+
+  .sobre-naura__intro h1 {
+    font-size: 2.6rem;
+  }
+
+  .sobre-naura__intro .sobre-naura__presentacion p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+
+}

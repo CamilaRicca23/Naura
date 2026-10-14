@@ -20,7 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       mensajeEstado.remove();
-      renderizarProductos(todosLosProductos);
+      const accesorios = todosLosProductos.filter(
+        producto => normalizarTexto(producto.categoria) === 'accesorios'
+      );
+
+      renderizarProductos(accesorios);
     })
     .catch(error => {
       console.error('Error al cargar productos:', error);
@@ -37,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         categoriaElegida === 'todos'
           ? todosLosProductos
           : todosLosProductos.filter(
-              p => normalizarTexto(p.categoria) === categoriaElegida
-            );
+            p => normalizarTexto(p.categoria) === categoriaElegida
+          );
 
       renderizarProductos(productosFiltrados);
     });
