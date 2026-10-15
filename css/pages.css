@@ -747,13 +747,13 @@
     font-size: 2rem;
   }
 
-  .galeria-producto__slide img {
-    height: auto;
-
-    aspect-ratio: 1 / 1;
-
-    object-fit: cover;
-  }
+ .galeria-producto__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
 
   .galeria-flecha {
     width: 36px;
