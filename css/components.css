@@ -113,10 +113,11 @@
   }
     .header__nav {
     display: flex;
+     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     width: 100%;
   }
 
