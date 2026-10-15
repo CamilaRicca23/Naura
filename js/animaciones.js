@@ -1,90 +1,108 @@
+
 /* ============================================
-   NAURA — animaciones.js
-   Hace que los elementos con clase "reveal"
-   aparezcan (fade + slide) cuando entran
-   en la pantalla al hacer scroll.
-   Usa IntersectionObserver, nativo del navegador.
+   NAURA — ANIMACIONES.JS
+   Scroll reveal e intro de marca
+   ============================================ */
+
+
+/* ============================================
+   1. INICIALIZACIÓN
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  configurarScrollReveal();
+  configurarIntroNaura();
+});
+
+
+/* ============================================
+   2. SCROLL REVEAL
+   ============================================ */
+
+/**
+ * Muestra los elementos cuando entran
+ * en la pantalla al hacer scroll.
+ */
+function configurarScrollReveal() {
   const elementos = document.querySelectorAll('.reveal');
 
+  if (elementos.length === 0) {
+    return;
+  }
+
+  // Respetar preferencia de movimiento reducido
+  const movimientoReducido = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+  // Mostrar directamente si no se pueden usar animaciones
+  if (movimientoReducido || !('IntersectionObserver' in window)) {
+    elementos.forEach(elemento => {
+      elemento.classList.add('reveal--visible');
+    });
+    return;
+  }
+
+  // Observar cuándo aparece cada elemento
   const observador = new IntersectionObserver(
-    (entradas) => {
+    entradas => {
       entradas.forEach(entrada => {
         if (entrada.isIntersecting) {
           entrada.target.classList.add('reveal--visible');
-          observador.unobserve(entrada.target); // se anima una sola vez
+
+          // Animar solamente una vez
+          observador.unobserve(entrada.target);
         }
       });
     },
-    { threshold: 0.15 } // se activa cuando el 15% del elemento es visible
+    {
+      threshold: 0.15
+    }
   );
 
-  elementos.forEach(el => observador.observe(el));
-});
+  elementos.forEach(elemento => {
+    observador.observe(elemento);
+  });
+}
+
 
 /* ============================================
-   INTRO NAURA
+   3. INTRO NAURA
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
-
+/**
+ * Controla la presentación inicial de la marca.
+ * Solo se ejecuta si existe #intro-naura.
+ */
+function configurarIntroNaura() {
   const intro = document.getElementById('intro-naura');
 
-  if (!intro) return;
+  if (!intro) {
+    return;
+  }
 
-  // Evita scroll mientras se reproduce la intro
-  document.body.classList.add('intro-activa');
+  const movimientoReducido = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
-  // Esperamos a que aparezca NAURA
-  setTimeout(() => {
-
-    intro.classList.add('intro-naura--salir');
-
-  }, 1000);
-
-
-  // Eliminamos completamente la intro
-  setTimeout(() => {
-
+  // Omitir la intro si se prefiere reducir movimiento
+  if (movimientoReducido) {
     intro.remove();
-
     document.body.classList.remove('intro-activa');
+    return;
+  }
 
-  }, 2000);
-
-});
-/* ============================================
-   INTRO NAURA
-   ============================================ */
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  const intro = document.getElementById('intro-naura');
-
-  if (!intro) return;
-
-  // Bloqueamos el scroll mientras está la presentación
+  // Bloquear scroll durante la presentación
   document.body.classList.add('intro-activa');
 
-
-  // Después de mostrar el logo comenzamos la salida
+  // Comenzar salida después de 2,2 segundos
   setTimeout(() => {
-
     intro.classList.add('intro-naura--salir');
-
   }, 2200);
 
-
-  // Cuando terminó la animación,
-  // eliminamos completamente la intro
+  // Eliminar intro al finalizar
   setTimeout(() => {
-
     intro.remove();
-
     document.body.classList.remove('intro-activa');
-
-  }, 3400);
-
-});
+  }, 1800);
+}

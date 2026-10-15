@@ -1,10 +1,15 @@
+
 /* ============================================
-   NAURA — components.css
-   Estilos del header y footer reutilizables
-   Depende de variables.css y base.css (importar antes)
+   NAURA — COMPONENTS CSS
+   Header y footer reutilizables
+
+   Requiere variables.css y base.css
    ============================================ */
 
-/* ============ HEADER ============ */
+
+/* ============================================
+   HEADER
+   ============================================ */
 
 .header {
   background-color: var(--color-verde1);
@@ -18,6 +23,8 @@
   align-items: center;
 }
 
+/* Logo */
+
 .header__logo {
   font-family: var(--fuente-marca);
   font-size: 2rem;
@@ -25,8 +32,11 @@
   letter-spacing: 0.05em;
 }
 
+/* Navegación */
+
 .header__nav .header__lista {
   display: flex;
+  align-items: center;
   gap: var(--espacio-md);
 }
 
@@ -36,17 +46,19 @@
   text-transform: uppercase;
   letter-spacing: var(--espaciado-letras);
   color: var(--color-bordo);
+  white-space: nowrap;
 }
 
-.header__nav a:hover {
-  color: var(--color-bordo);
-}
+/* Menú desplegable: no utilizado actualmente */
 
 .header__menu-toggle {
   display: none;
 }
 
-/* ============ FOOTER ============ */
+
+/* ============================================
+   FOOTER
+   ============================================ */
 
 .footer {
   background-color: var(--color-bordo);
@@ -63,22 +75,28 @@
   gap: var(--espacio-md);
 }
 
+/* Logo */
+
 .footer__logo {
   font-family: var(--fuente-marca);
   font-size: 1.5rem;
   color: var(--color-fondo);
 }
 
+/* Etiquetas */
+
 .footer .texto-etiqueta {
   color: var(--color-fondo);
   opacity: 0.8;
 }
 
+/* Navegación */
+
 .footer__nav .footer__lista {
   display: flex;
-  gap: var(--espacio-sm);
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--espacio-sm);
 }
 
 .footer__nav a {
@@ -93,27 +111,34 @@
   text-decoration: underline;
 }
 
+/* Copyright */
+
 .footer__copy {
   font-size: 0.75rem;
   opacity: 0.7;
 }
 
-/* ============ RESPONSIVE (mobile) ============ */
+
+/* ============================================
+   RESPONSIVE — CELULARES
+   ============================================ */
 
 @media (max-width: 700px) {
+
+  /* Header */
+
   .header__contenido {
     flex-direction: column;
     gap: var(--espacio-sm);
   }
 
-  .header__nav .header__lista {
-    gap: var(--espacio-sm);
-    flex-wrap: wrap;
-    justify-content: center;
+  .header__nav {
+    width: 100%;
   }
-    .header__nav {
+
+  .header__nav .header__lista {
     display: flex;
-     flex-direction: row;
+    flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
@@ -126,4 +151,5 @@
     letter-spacing: 0.04em;
     white-space: nowrap;
   }
+
 }

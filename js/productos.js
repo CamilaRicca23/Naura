@@ -1,90 +1,144 @@
+
 /* ============================================
-   NAURA — productos.js
-   Renderiza la grilla de productos y permite
-   filtrarlos por categoría (Cuero / Accesorios).
+   NAURA — PRODUCTOS.JS
+   Listado, tarjetas y filtros de productos
+
+   Requiere sheets.js
+   ============================================ */
+
+
+/* ============================================
+   1. VARIABLES
    ============================================ */
 
 let todosLosProductos = [];
 
-document.addEventListener('DOMContentLoaded', () => {
+
+/* ============================================
+   2. INICIALIZACIÓN
+   ============================================ */
+
+document.addEventListener('DOMContentLoaded', async () => {
   const mensajeEstado = document.getElementById('estado-productos');
   const botonesFiltro = document.querySelectorAll('.filtro-boton');
 
-  obtenerProductos()
-    .then(productos => {
-      todosLosProductos = productos;
+  try {
+    // Obtener productos desde Google Sheets
+    todosLosProductos = await obtenerProductos();
 
-      if (productos.length === 0) {
-        mensajeEstado.textContent = 'Todavía no hay productos cargados.';
-        return;
-      }
+    if (todosLosProductos.length === 0) {
+      mensajeEstado.textContent = 'Todavía no hay productos cargados.';
+      return;
+    }
 
-      mensajeEstado.remove();
-      const accesorios = todosLosProductos.filter(
-        producto => normalizarTexto(producto.categoria) === 'accesorios'
-      );
+    // Ocultar mensaje de carga
+    mensajeEstado.remove();
 
-      renderizarProductos(accesorios);
-    })
-    .catch(error => {
-      console.error('Error al cargar productos:', error);
-      mensajeEstado.textContent = 'No se pudieron cargar los productos. Intentá de nuevo más tarde.';
-    });
+    // Mostrar Accesorios al ingresar
+    filtrarProductos('accesorios');
 
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+
+    mensajeEstado.textContent =
+      'No se pudieron cargar los productos. Intentá de nuevo más tarde.';
+  }
+
+  // Configurar botones de filtro
   botonesFiltro.forEach(boton => {
     boton.addEventListener('click', () => {
-      botonesFiltro.forEach(b => b.classList.remove('filtro-boton--activo'));
+      const categoria = boton.dataset.categoria;
+
+      // Actualizar botón activo
+      botonesFiltro.forEach(b => {
+        b.classList.remove('filtro-boton--activo');
+      });
+
       boton.classList.add('filtro-boton--activo');
 
-      const categoriaElegida = boton.dataset.categoria;
-      const productosFiltrados =
-        categoriaElegida === 'todos'
-          ? todosLosProductos
-          : todosLosProductos.filter(
-            p => normalizarTexto(p.categoria) === categoriaElegida
-          );
-
-      renderizarProductos(productosFiltrados);
+      // Mostrar productos filtrados
+      filtrarProductos(categoria);
     });
   });
 });
 
+
+/* ============================================
+   3. FILTRADO DE PRODUCTOS
+   ============================================ */
+
+function filtrarProductos(categoria) {
+  const categoriaNormalizada = normalizarTexto(categoria);
+
+  const productosFiltrados =
+    categoriaNormalizada === 'todos'
+      ? todosLosProductos
+      : todosLosProductos.filter(producto =>
+          normalizarTexto(producto.categoria) === categoriaNormalizada
+        );
+
+  renderizarProductos(productosFiltrados);
+}
+
+
+/* ============================================
+   4. RENDERIZADO DE PRODUCTOS
+   ============================================ */
+
 function renderizarProductos(productos) {
   const contenedor = document.getElementById('grilla-productos');
 
-  if (productos.length === 0) {
-    contenedor.innerHTML = '<p class="destacados__vacio">No hay productos en esta categoría todavía.</p>';
+  if (!contenedor) {
     return;
   }
 
-  contenedor.innerHTML = productos.map(crearTarjetaProducto).join('');
-}
-function obtenerPrecioProducto(producto) {
-
-  const precioDesde = String(producto.precio || '').trim();
-  const precioHasta = String(producto.precio_hasta || '').trim();
-
-  if (precioDesde && precioHasta) {
-    return ` $${precioDesde} -  $${precioHasta}`;
+  if (productos.length === 0) {
+    contenedor.innerHTML = `
+      <p class="destacados__vacio">
+        No hay productos en esta categoría todavía.
+      </p>
+    `;
+    return;
   }
 
-  if (precioDesde) {
-    return `$ ${precioDesde}`;
-  }
-
-  return 'Consultar precio';
+  contenedor.innerHTML = productos
+    .map(crearTarjetaProducto)
+    .join('');
 }
+
+
+/* ============================================
+   5. TARJETAS DE PRODUCTOS
+   ============================================ */
 
 function crearTarjetaProducto(producto) {
   return `
-    <a href="producto-detalle.html?id=${producto.id}" class="tarjeta-producto">
-      <img src="${producto.imagen}" alt="${producto.nombre}">
+    <a
+      href="producto-detalle.html?id=${encodeURIComponent(producto.id)}"
+      class="tarjeta-producto"
+    >
+      <img
+        src="${producto.imagen}"
+        alt="${producto.nombre}"
+        loading="lazy"
+      >
+
       <h3>${producto.nombre}</h3>
-      <p> ${obtenerPrecioProducto(producto)}</p>
+
+      <p>${obtenerPrecioProducto(producto)}</p>
     </a>
   `;
 }
 
+
+/* ============================================
+   6. FUNCIONES AUXILIARES
+   ============================================ */
+
+/**
+ * Normaliza textos para comparar categorías.
+ * Elimina mayúsculas, espacios y tildes.
+ */
 function normalizarTexto(texto) {
   return String(texto || '')
     .trim()

@@ -1,28 +1,50 @@
+
 /* ============================================
-   NAURA — animaciones.css
-   Scroll reveal + elementos decorativos con movimiento
-   Depende de variables.css (importar antes)
+   NAURA — ANIMACIONES CSS
+   Scroll reveal, decoración e intro de marca
    ============================================ */
 
-/* ============ SCROLL REVEAL ============ */
+
+/* ============================================
+   1. SCROLL REVEAL
+   ============================================ */
+
+/* Estado inicial */
 
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Elemento visible */
 
 .reveal--visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Delay escalonado para grupos de elementos (tarjetas, columnas) */
-.reveal--delay-1 { transition-delay: 0.1s; }
-.reveal--delay-2 { transition-delay: 0.2s; }
-.reveal--delay-3 { transition-delay: 0.3s; }
+/* Aparición escalonada */
 
-/* ============ HERO: contenedor de decoración ============ */
+.reveal--delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal--delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal--delay-3 {
+  transition-delay: 0.3s;
+}
+
+
+/* ============================================
+   2. DECORACIÓN DEL HERO
+   ============================================ */
 
 .hero {
   position: relative;
@@ -32,8 +54,8 @@
 .hero__decoracion {
   position: absolute;
   inset: 0;
-  pointer-events: none; /* no interfiere con clicks */
   z-index: 0;
+  pointer-events: none;
 }
 
 .hero__contenido {
@@ -42,56 +64,59 @@
 }
 
 
-/* ============ Keyframes ============ */
+/* Animaciones decorativas */
 
 @keyframes girar {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes flotar {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
-}
+  0%, 100% {
+    transform: translateY(0);
+  }
 
-/* En mobile, ocultamos las formas más grandes para no saturar */
-@media (max-width: 700px) {
-  .forma--anillo-grande,
-  .forma--anillo-chico {
-    display: none;
+  50% {
+    transform: translateY(-18px);
   }
 }
+
+
 /* ============================================
-   INTRO NAURA
+   3. INTRO NAURA
    ============================================ */
+
+/* Bloquea el scroll durante la intro */
 
 body.intro-activa {
   overflow: hidden;
 }
 
-
-/* ============ PANTALLA COMPLETA ============ */
+/* Pantalla completa */
 
 .intro-naura {
   position: fixed;
   inset: 0;
-
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  z-index: 9999;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background-color: var(--color-verde1);
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
 
-  z-index: 9999;
+  background-color: var(--color-verde1);
   overflow: hidden;
 }
 
-
-/* ============ MARCA ============ */
+/* Contenedor de la marca */
 
 .intro-naura__marca {
   display: flex;
@@ -101,30 +126,24 @@ body.intro-activa {
   transform: translateY(0);
 }
 
-
-/* ============ LOGO ============ */
+/* Logo NAURA */
 
 .intro-naura__logo {
   display: flex;
 
+  padding: 0.12em 0.08em 0.18em;
+
   font-family: var(--fuente-marca);
   font-size: clamp(5rem, 13vw, 11rem);
   font-weight: 400;
-
-  /* Más espacio para que Fraunces no se corte */
   line-height: 1.15;
   letter-spacing: -0.065em;
 
   color: var(--color-bordo);
-
-  /* Espacio extra para los extremos de las letras */
-  padding: 0.12em 0.08em 0.18em;
-
   overflow: hidden;
 }
 
-
-/* Cada letra */
+/* Animación de cada letra */
 
 .intro-naura__logo span {
   display: inline-block;
@@ -133,14 +152,12 @@ body.intro-activa {
   transform: translateY(100%);
 
   animation:
-    letraNauraEntrada
-    1s
+    letraNauraEntrada 1s
     cubic-bezier(0.16, 1, 0.3, 1)
     forwards;
 }
 
-
-/* Entrada progresiva */
+/* Entrada progresiva de las letras */
 
 .intro-naura__logo span:nth-child(1) {
   animation-delay: 0.10s;
@@ -162,19 +179,16 @@ body.intro-activa {
   animation-delay: 0.38s;
 }
 
-
-/* ============ LEATHER ============ */
+/* Texto LEATHER */
 
 .intro-naura__leather {
   margin-top: 20px;
+  padding-left: 0.6em;
 
   font-family: var(--fuente-texto);
   font-size: clamp(0.55rem, 1vw, 0.75rem);
-
   font-weight: 400;
-
   letter-spacing: 0.6em;
-  padding-left: 0.6em;
 
   color: var(--color-bordo);
 
@@ -182,49 +196,38 @@ body.intro-activa {
   transform: translateY(12px);
 
   animation:
-    leatherEntrada
-    0.7s
-    ease
-    0.9s
-    forwards;
+    leatherEntrada 0.7s ease 0.9s forwards;
 }
 
 
 /* ============================================
-   SALIDA DE LA INTRO
+   4. SALIDA DE LA INTRO
    ============================================ */
 
-/* El logo se mueve antes de desaparecer */
+/* Desplazamiento del logo */
 
 .intro-naura--salir .intro-naura__marca {
-
   animation:
-    marcaNauraSalida
-    0.8s
+    marcaNauraSalida 0.8s
     cubic-bezier(0.76, 0, 0.24, 1)
     forwards;
 }
 
-
-/* La pantalla completa se retira */
+/* Desaparición de la pantalla */
 
 .intro-naura--salir {
-
   animation:
-    pantallaNauraSalida
-    1.15s
+    pantallaNauraSalida 1.15s
     cubic-bezier(0.76, 0, 0.24, 1)
     forwards;
-
 }
 
 
 /* ============================================
-   KEYFRAMES
+   5. KEYFRAMES DE LA INTRO
    ============================================ */
 
-
-/* Las letras suben */
+/* Entrada de letras */
 
 @keyframes letraNauraEntrada {
   0% {
@@ -238,11 +241,9 @@ body.intro-activa {
   }
 }
 
-
-/* Aparece LEATHER */
+/* Aparición de LEATHER */
 
 @keyframes leatherEntrada {
-
   0% {
     opacity: 0;
     transform: translateY(12px);
@@ -252,14 +253,11 @@ body.intro-activa {
     opacity: 0.8;
     transform: translateY(0);
   }
-
 }
 
-
-/* Logo sale hacia arriba */
+/* Salida del logo */
 
 @keyframes marcaNauraSalida {
-
   0% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -269,14 +267,11 @@ body.intro-activa {
     opacity: 0;
     transform: translateY(-60px) scale(0.96);
   }
-
 }
 
-
-/* Pantalla crema se descubre desde abajo */
+/* Salida de la pantalla */
 
 @keyframes pantallaNauraSalida {
-
   0% {
     clip-path: inset(0 0 0 0);
   }
@@ -284,19 +279,29 @@ body.intro-activa {
   100% {
     clip-path: inset(0 0 100% 0);
   }
-
 }
 
 
 /* ============================================
-   MOBILE
+   6. RESPONSIVE — CELULARES
    ============================================ */
 
 @media (max-width: 700px) {
 
+  /* Ocultar decoración grande */
+
+  .forma--anillo-grande,
+  .forma--anillo-chico {
+    display: none;
+  }
+
+  /* Ajustar tamaño del logo */
+
   .intro-naura__logo {
     font-size: clamp(4rem, 21vw, 7rem);
   }
+
+  /* Ajustar texto LEATHER */
 
   .intro-naura__leather {
     margin-top: 14px;

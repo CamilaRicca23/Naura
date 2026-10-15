@@ -1,10 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Productos — NAURA</title>
@@ -12,85 +11,112 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="img/img_logo.png">
 
-
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Montserrat:wght@300;400;500&display=swap"
-    rel="stylesheet">
+    rel="stylesheet"
+  >
 
-
-  <!-- CSS -->
+  <!-- Estilos -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/pages.css">
-
 </head>
-
 
 <body>
 
+  <!-- ==========================================
+       1. HEADER
+       ========================================== -->
 
-  <!-- HEADER -->
   <div id="header-placeholder"></div>
 
 
+  <!-- ==========================================
+       2. CONTENIDO PRINCIPAL
+       ========================================== -->
+
   <main>
 
-    <section class="hero contenedor" style="padding-top: var(--espacio-lg); padding-bottom: var(--espacio-md);">
+    <!-- TÍTULO DE LA PÁGINA -->
 
-      <h1 style="font-size: 2.5rem;">PRODUCTOS</h1>
+    <section
+      class="hero contenedor"
+      style="padding-top: var(--espacio-lg); padding-bottom: var(--espacio-md);"
+    >
+      <h1 style="font-size: 2.5rem;">
+        PRODUCTOS
+      </h1>
     </section>
 
-    <!-- FILTROS -->
-    <section class="filtros contenedor">
 
-      <button class="filtro-boton filtro-boton--activo" data-categoria="accesorios" type="button">
+    <!-- FILTROS DE CATEGORÍAS -->
+
+    <section class="filtros contenedor" aria-label="Filtrar productos">
+
+      <button
+        type="button"
+        class="filtro-boton filtro-boton--activo"
+        data-categoria="accesorios"
+      >
         Accesorios
       </button>
 
-       <button class="filtro-boton" data-categoria="cuero" type="button">
+      <button
+        type="button"
+        class="filtro-boton"
+        data-categoria="cuero"
+      >
         Cuero
       </button>
 
-      <button class="filtro-boton" data-categoria="todos" type="button">
+      <button
+        type="button"
+        class="filtro-boton"
+        data-categoria="todos"
+      >
         Todos
       </button>
-
 
     </section>
 
 
     <!-- LISTADO DE PRODUCTOS -->
+
     <section class="destacados contenedor">
 
-      <p id="estado-productos">
+      <p id="estado-productos" role="status">
         Cargando productos...
       </p>
 
-      <div id="grilla-productos" class="destacados__grid">
-      </div>
+      <div
+        id="grilla-productos"
+        class="destacados__grid"
+      ></div>
 
     </section>
-
 
   </main>
 
 
-  <!-- FOOTER -->
+  <!-- ==========================================
+       3. FOOTER
+       ========================================== -->
+
   <div id="footer-placeholder"></div>
 
 
-  <!-- JAVASCRIPT -->
-  <script src="js/components.js"></script>
-  <script src="js/sheets.js"></script>
-  <script src="js/productos.js"></script>
+  <!-- ==========================================
+       4. JAVASCRIPT
+       ========================================== -->
 
+  <script src="js/components.js" defer></script>
+  <script src="js/sheets.js" defer></script>
+  <script src="js/productos.js" defer></script>
 
 </body>
-
 </html>

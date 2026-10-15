@@ -1,7 +1,12 @@
 
 /* ============================================
-   NAURA — sobrenaura.js
+   NAURA — SOBRENAURA.JS
    Formas de pago y copiado de cuentas
+   ============================================ */
+
+
+/* ============================================
+   1. CUENTAS BANCARIAS
    ============================================ */
 
 const cuentasBancarias = [
@@ -21,97 +26,156 @@ const cuentasBancarias = [
   }
 ];
 
+
+/* ============================================
+   2. INICIALIZACIÓN
+   ============================================ */
+
 document.addEventListener('DOMContentLoaded', () => {
   mostrarCuentasBancarias();
 });
 
+
+/* ============================================
+   3. MOSTRAR CUENTAS BANCARIAS
+   ============================================ */
+
 function mostrarCuentasBancarias() {
   const contenedor = document.getElementById('lista-bancos');
 
-  if (!contenedor) return;
+  if (!contenedor) {
+    return;
+  }
 
-  contenedor.innerHTML = cuentasBancarias.map((cuenta, index) => {
-    const tieneNumero = cuenta.numero.trim() !== '';
+  // Crear tarjetas de cuentas
+  contenedor.innerHTML = cuentasBancarias
+    .map((cuenta, indice) => crearTarjetaBanco(cuenta, indice))
+    .join('');
 
-    return `
-      <article class="sobre-naura__banco">
-
-        <div class="sobre-naura__banco-identidad">
-          <img
-            src="${cuenta.logo}"
-            alt="Logo de ${cuenta.banco}"
-            class="sobre-naura__banco-logo"
-          >
-
-          <div>
-            <h3>${cuenta.banco}</h3>
-            ${cuenta.titular
-        ? `<p>Titular: ${cuenta.titular}</p>`
-        : ''}
-          </div>
-        </div>
-
-        <div class="sobre-naura__banco-cuenta">
-          <div>
-            <span class="sobre-naura__banco-etiqueta">
-              Número de cuenta
-            </span>
-
-            <p class="sobre-naura__banco-numero">
-              ${cuenta.numero}
-            </p>
-            <p class="sobre-naura__banco-info">
-               ${cuenta.info}
-            </p>
-
-          </div>
-
-          <button
-            type="button"
-            class="sobre-naura__copiar"
-            data-indice="${index}"
-            ${tieneNumero ? '' : 'disabled'}
-          >
-            Copiar cuenta
-          </button>
-        </div>
-
-      </article>
-    `;
-  }).join('');
-
-  contenedor.querySelectorAll('.sobre-naura__copiar')
-    .forEach(boton => {
-      boton.addEventListener('click', async () => {
-        const indice = Number(boton.dataset.indice);
-        const numero = cuentasBancarias[indice].numero;
-
-        if (!numero) return;
-
-        try {
-          await copiarTexto(numero);
-
-          boton.textContent = '¡Copiado!';
-
-          setTimeout(() => {
-            boton.textContent = 'Copiar cuenta';
-          }, 2000);
-
-        } catch (error) {
-          console.error('No se pudo copiar:', error);
-          boton.textContent = 'No se pudo copiar';
-        }
-      });
-    });
+  // Configurar botones para copiar
+  configurarBotonesCopiar(contenedor);
 }
 
+
+/* ============================================
+   4. CREAR TARJETA BANCARIA
+   ============================================ */
+
+function crearTarjetaBanco(cuenta, indice) {
+  const tieneNumero = Boolean(cuenta.numero.trim());
+
+  return `
+    <article class="sobre-naura__banco">
+
+      <div class="sobre-naura__banco-identidad">
+        <img
+          src="${cuenta.logo}"
+          alt="Logo de ${cuenta.banco}"
+          class="sobre-naura__banco-logo"
+        >
+
+        <div>
+          <h3>${cuenta.banco}</h3>
+
+          ${cuenta.titular
+            ? `<p>Titular: ${cuenta.titular}</p>`
+            : ''}
+        </div>
+      </div>
+
+      <div class="sobre-naura__banco-cuenta">
+        <div>
+          <span class="sobre-naura__banco-etiqueta">
+            Número de cuenta
+          </span>
+
+          <p class="sobre-naura__banco-numero">
+            ${cuenta.numero}
+          </p>
+
+          <p class="sobre-naura__banco-info">
+            ${cuenta.info}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="sobre-naura__copiar"
+          data-indice="${indice}"
+          ${tieneNumero ? '' : 'disabled'}
+        >
+          Copiar cuenta
+        </button>
+      </div>
+
+    </article>
+  `;
+}
+
+
+/* ============================================
+   5. BOTONES PARA COPIAR
+   ============================================ */
+
+function configurarBotonesCopiar(contenedor) {
+  const botones = contenedor.querySelectorAll(
+    '.sobre-naura__copiar'
+  );
+
+  botones.forEach(boton => {
+    let temporizador;
+
+    boton.addEventListener('click', async () => {
+      const indice = Number(boton.dataset.indice);
+      const cuenta = cuentasBancarias[indice];
+
+      if (!cuenta || !cuenta.numero) {
+        return;
+      }
+
+      // Cancelar temporizador anterior
+      clearTimeout(temporizador);
+
+      try {
+        await copiarTexto(cuenta.numero);
+
+        boton.textContent = '¡Copiado!';
+
+      } catch (error) {
+        console.error('No se pudo copiar:', error);
+
+        boton.textContent = 'No se pudo copiar';
+      }
+
+      // Restaurar el texto del botón
+      temporizador = setTimeout(() => {
+        boton.textContent = 'Copiar cuenta';
+      }, 2000);
+    });
+  });
+}
+
+
+/* ============================================
+   6. COPIAR TEXTO AL PORTAPAPELES
+   ============================================ */
+
+/**
+ * Copia un texto al portapapeles.
+ * Incluye alternativa para navegadores
+ * que no admiten Clipboard API.
+ */
 async function copiarTexto(texto) {
+
+  // Método moderno
   if (navigator.clipboard && window.isSecureContext) {
     await navigator.clipboard.writeText(texto);
     return;
   }
 
+  // Método alternativo
   const campo = document.createElement('textarea');
+
   campo.value = texto;
   campo.style.position = 'fixed';
   campo.style.opacity = '0';
@@ -120,6 +184,7 @@ async function copiarTexto(texto) {
   campo.select();
 
   const copiado = document.execCommand('copy');
+
   campo.remove();
 
   if (!copiado) {

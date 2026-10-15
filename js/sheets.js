@@ -1,132 +1,196 @@
+
 /* ============================================
-   NAURA — sheets.js
-   Lee una Google Sheet publicada como CSV
-   y la convierte en un array de objetos JS.
-   Reutilizable para productos, y en el futuro
-   para cualquier otra hoja (ej. testimonios).
+   NAURA — SHEETS.JS
+   Carga y preparación de productos desde
+   Google Sheets
    ============================================ */
 
-// TODO: reemplazar por la URL real de tu hoja publicada como CSV
-const URL_HOJA_PRODUCTOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT2rXZ_9OKfzEku8kgDGuNfyneVQvbRG4zT3MRXYYCHlgjvptgWIY_pdV4VafoIjwyRJ3tiC4hn4l3y/pub?output=csv';
+
+/* ============================================
+   1. CONFIGURACIÓN
+   ============================================ */
+
+const URL_HOJA_PRODUCTOS =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vT2rXZ_9OKfzEku8kgDGuNfyneVQvbRG4zT3MRXYYCHlgjvptgWIY_pdV4VafoIjwyRJ3tiC4hn4l3y/pub?output=csv';
+
+
+/* ============================================
+   2. LECTURA DEL CSV
+   ============================================ */
 
 /**
- * Convierte texto CSV en un array de objetos.
- * La primera fila del CSV se usa como nombres de columna (keys).
- * Soporta valores con comas dentro de comillas (ej: "Bolso, mediano").
+ * Divide el CSV en filas y columnas.
+ * Respeta comas, saltos de línea y comillas
+ * dentro de las celdas.
  */
-function parsearCSV(textoCSV) {
-  const filas = textoCSV.trim().split('\n');
-  const encabezados = dividirFilaCSV(filas[0]).map(h => h.trim().toLowerCase());
-
-  return filas.slice(1).map(fila => {
-    const valores = dividirFilaCSV(fila);
-    const objeto = {};
-    encabezados.forEach((encabezado, i) => {
-      objeto[encabezado] = (valores[i] || '').trim();
-    });
-    return objeto;
-  });
-}
-
-/**
- * Divide una fila de CSV en sus valores, respetando comillas.
- */
-function dividirFilaCSV(fila) {
-  const resultado = [];
+function dividirCSV(textoCSV) {
+  const filas = [];
+  let filaActual = [];
   let valorActual = '';
   let dentroDeComillas = false;
 
-  for (let i = 0; i < fila.length; i++) {
-    const char = fila[i];
+  const texto = textoCSV.replace(/^\uFEFF/, '');
 
-    if (char === '"') {
-      dentroDeComillas = !dentroDeComillas;
-    } else if (char === ',' && !dentroDeComillas) {
-      resultado.push(valorActual);
+  for (let i = 0; i < texto.length; i++) {
+    const caracter = texto[i];
+
+    if (caracter === '"') {
+      if (dentroDeComillas && texto[i + 1] === '"') {
+        valorActual += '"';
+        i++;
+      } else {
+        dentroDeComillas = !dentroDeComillas;
+      }
+
+    } else if (caracter === ',' && !dentroDeComillas) {
+      filaActual.push(valorActual);
       valorActual = '';
+
+    } else if (
+      (caracter === '\n' || caracter === '\r') &&
+      !dentroDeComillas
+    ) {
+      if (caracter === '\r' && texto[i + 1] === '\n') {
+        i++;
+      }
+
+      filaActual.push(valorActual);
+
+      if (filaActual.some(valor => valor.trim() !== '')) {
+        filas.push(filaActual);
+      }
+
+      filaActual = [];
+      valorActual = '';
+
     } else {
-      valorActual += char;
+      valorActual += caracter;
     }
   }
-  resultado.push(valorActual);
-  return resultado;
+
+  filaActual.push(valorActual);
+
+  if (filaActual.some(valor => valor.trim() !== '')) {
+    filas.push(filaActual);
+  }
+
+  return filas;
 }
 
+
 /**
- * Convierte un link normal de "Compartir" de Google Drive
- * en un link directo que funciona como src de una imagen.
+ * Convierte las filas del CSV en objetos.
+ * La primera fila contiene los encabezados.
+ */
+function parsearCSV(textoCSV) {
+  const filas = dividirCSV(textoCSV);
+
+  if (filas.length === 0) {
+    return [];
+  }
+
+  const encabezados = filas[0].map(encabezado =>
+    encabezado.trim().toLowerCase()
+  );
+
+  return filas.slice(1).map(valores => {
+    const producto = {};
+
+    encabezados.forEach((encabezado, indice) => {
+      producto[encabezado] = (valores[indice] || '').trim();
+    });
+
+    return producto;
+  });
+}
+
+
+/* ============================================
+   3. IMÁGENES DE GOOGLE DRIVE
+   ============================================ */
+
+/**
+ * Convierte enlaces compartidos de Drive
+ * en enlaces utilizables para imágenes.
  */
 function convertirLinkDrive(linkDrive) {
-  if (!linkDrive) return '';
+  if (!linkDrive) {
+    return '';
+  }
 
   const link = String(linkDrive).trim();
 
-  // Formato: https://drive.google.com/file/d/ID/view
-  let match = link.match(/\/file\/d\/([^/]+)/);
+  const enlaceArchivo = link.match(
+    /drive\.google\.com\/file\/d\/([^/?#]+)/
+  );
 
-  // Formato: https://drive.google.com/open?id=ID
-  if (!match) {
-    match = link.match(/[?&]id=([^&]+)/);
+  const enlaceConId = link.match(
+    /[?&]id=([^&#]+)/
+  );
+
+  const id = enlaceArchivo?.[1] || enlaceConId?.[1];
+
+  if (!id) {
+    return link;
   }
 
-  if (match && match[1]) {
-    const id = match[1];
-    return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
-  }
-
-  return link;
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
 }
+
+
+/* ============================================
+   4. OBTENER PRODUCTOS
+   ============================================ */
 
 /**
- * Trae y parsea los productos desde la Google Sheet.
- * Devuelve una Promise con el array de productos ya listo para usar.
+ * Obtiene los productos disponibles y
+ * prepara sus imágenes.
  */
-function obtenerProductos() {
+async function obtenerProductos() {
+  const respuesta = await fetch(URL_HOJA_PRODUCTOS);
 
-  return fetch(URL_HOJA_PRODUCTOS)
+  if (!respuesta.ok) {
+    throw new Error('No se pudo leer la hoja de productos');
+  }
 
-    .then(respuesta => {
+  const textoCSV = await respuesta.text();
+  const productos = parsearCSV(textoCSV);
 
-      if (!respuesta.ok) {
-        throw new Error('No se pudo leer la hoja de productos');
-      }
+  return productos
+    .filter(producto =>
+      producto.disponible?.trim().toLowerCase() === 'si'
+    )
+    .map(producto => ({
+      ...producto,
 
-      return respuesta.text();
-
-    })
-
-    .then(textoCSV => parsearCSV(textoCSV))
-
-    .then(productos =>
-      productos
-
-        // Solo productos disponibles
-        .filter(
-          p =>
-            p.disponible &&
-            p.disponible.toLowerCase() === 'si'
-        )
-
-        // Convertimos todas las imágenes de Drive
-        .map(p => ({
-          ...p,
-
-          imagen: convertirLinkDrive(p.imagen),
-          imagen2: convertirLinkDrive(p.imagen2),
-          imagen3: convertirLinkDrive(p.imagen3),
-          imagen4: convertirLinkDrive(p.imagen4)
-
-        }))
-    );
-
+      imagen: convertirLinkDrive(producto.imagen),
+      imagen2: convertirLinkDrive(producto.imagen2),
+      imagen3: convertirLinkDrive(producto.imagen3),
+      imagen4: convertirLinkDrive(producto.imagen4)
+    }));
 }
 
+
+/* ============================================
+   5. FORMATO DE PRECIOS
+   ============================================ */
+
+/**
+ * Devuelve el precio de un producto.
+ * Admite precio único, rango o sin precio.
+ */
 function obtenerPrecioProducto(producto) {
+  const limpiarPrecio = valor =>
+    String(valor ?? '').replace(/\$/g, '').trim();
 
-  const desde = producto.precio;
-  const hasta = producto.precio_hasta;
+  const desde = limpiarPrecio(producto.precio);
+  const hasta = limpiarPrecio(producto.precio_hasta);
 
-  if (desde && hasta) {
+  if (!desde) {
+    return 'Consultar precio';
+  }
+
+  if (hasta) {
     return `$ ${desde} - $ ${hasta}`;
   }
 

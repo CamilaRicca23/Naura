@@ -1,160 +1,105 @@
-document.addEventListener('DOMContentLoaded', async () => {
 
+/* ============================================
+   NAURA — PRODUCTO-DETALLE.JS
+   Información, galería, entrega y WhatsApp
+
+   Requiere sheets.js
+   ============================================ */
+
+
+/* ============================================
+   1. INICIALIZACIÓN
+   ============================================ */
+
+document.addEventListener('DOMContentLoaded', async () => {
   const estado = document.getElementById('estado-detalle');
   const detalle = document.getElementById('producto-detalle');
 
-
-  /* ============================================
-     OBTENER ID DEL PRODUCTO DESDE LA URL
-     ============================================ */
-
+  // Obtener ID desde la URL
   const parametros = new URLSearchParams(window.location.search);
-
   const idProducto = parametros.get('id');
 
-
   if (!idProducto) {
-
     estado.textContent = 'No se encontró el producto.';
-
     return;
-
   }
 
-
   try {
-
-    /* ============================================
-       OBTENER PRODUCTOS
-       ============================================ */
-
+    // Obtener productos desde Google Sheets
     const productos = await obtenerProductos();
 
-
-    /* ============================================
-       BUSCAR PRODUCTO
-       ============================================ */
-
-    const producto = productos.find(
-      p => String(p.id).trim() === String(idProducto).trim()
+    // Buscar el producto seleccionado
+    const producto = productos.find(p =>
+      String(p.id).trim() === idProducto.trim()
     );
-
 
     if (!producto) {
-
       estado.textContent = 'El producto no está disponible.';
-
       return;
-
     }
 
-
-    /* ============================================
-       INFORMACIÓN DEL PRODUCTO
-       ============================================ */
-
-    document.getElementById('producto-nombre')
-      .textContent = producto.nombre;
-
-
-    document.getElementById('producto-categoria')
-      .textContent = producto.categoria || 'NAURA';
-
-
-    document.getElementById('producto-precio')
-      .textContent = obtenerPrecioProducto(producto);
-
-
-    document.getElementById('producto-descripcion')
-      .textContent = producto.descripcion || '';
-
-
-    /* ============================================
-       GALERÍA DE IMÁGENES
-       ============================================ */
-
+    // Configurar las secciones del detalle
+    mostrarInformacionProducto(producto);
     configurarGaleria(producto);
-
-
-    /* ============================================
-       ENTREGA
-       ============================================ */
-
     configurarEntrega(producto);
-
-
-    /* ============================================
-       WHATSAPP
-       ============================================ */
-
     configurarWhatsApp(producto);
 
-
-    /* ============================================
-       MOSTRAR PRODUCTO
-       ============================================ */
-
+    // Mostrar producto y quitar mensaje de carga
     estado.remove();
-
     detalle.hidden = false;
 
-
-    /* Título de la pestaña */
-
-    document.title =
-      `${producto.nombre} — NAURA`;
-
+    // Actualizar título de la pestaña
+    document.title = `${producto.nombre} — NAURA`;
 
   } catch (error) {
-
-    console.error(
-      'Error al cargar el producto:',
-      error
-    );
+    console.error('Error al cargar el producto:', error);
 
     estado.textContent =
       'No se pudo cargar el producto. Intentá nuevamente.';
-
   }
-
 });
 
 
 /* ============================================
-   GALERÍA
+   2. INFORMACIÓN DEL PRODUCTO
+   ============================================ */
+
+function mostrarInformacionProducto(producto) {
+  document.getElementById('producto-nombre').textContent =
+    producto.nombre;
+
+  document.getElementById('producto-categoria').textContent =
+    producto.categoria || 'NAURA';
+
+  document.getElementById('producto-precio').textContent =
+    obtenerPrecioProducto(producto);
+
+  document.getElementById('producto-descripcion').textContent =
+    producto.descripcion || '';
+}
+
+
+/* ============================================
+   3. GALERÍA DE IMÁGENES
    ============================================ */
 
 function configurarGaleria(producto) {
+  const galeria = document.getElementById('galeria-producto');
+  const ventana = galeria.parentElement;
 
-  const galeria =
-    document.getElementById('galeria-producto');
+  const botonAnterior = document.getElementById('galeria-anterior');
+  const botonSiguiente = document.getElementById('galeria-siguiente');
 
-  const ventana =
-    galeria.parentElement;
-
-  const botonAnterior =
-    document.getElementById('galeria-anterior');
-
-  const botonSiguiente =
-    document.getElementById('galeria-siguiente');
-
-
-  /* Obtener únicamente las imágenes cargadas */
-
+  // Obtener únicamente las imágenes disponibles
   const imagenes = [
     producto.imagen,
     producto.imagen2,
     producto.imagen3,
     producto.imagen4
-  ].filter(
-    imagen => imagen && imagen.trim() !== ''
-  );
+  ].filter(imagen => imagen && imagen.trim() !== '');
 
-
-  /* Si no hay imágenes */
-
+  // Producto sin imágenes
   if (imagenes.length === 0) {
-
     galeria.innerHTML = `
       <div class="galeria-producto__slide">
         <div class="galeria-producto__sin-imagen">
@@ -165,189 +110,100 @@ function configurarGaleria(producto) {
 
     botonAnterior.hidden = true;
     botonSiguiente.hidden = true;
-
     return;
-
   }
 
-
-  /* Crear las imágenes */
-
+  // Crear galería
   galeria.innerHTML = imagenes
-    .map((imagen, index) => `
+    .map((imagen, indice) => `
       <div class="galeria-producto__slide">
-
         <img
           src="${imagen}"
-          alt="${producto.nombre} - imagen ${index + 1}"
+          alt="${producto.nombre} - imagen ${indice + 1}"
         >
-
       </div>
     `)
     .join('');
 
+  // Mostrar flechas únicamente si hay varias imágenes
+  const tieneVariasImagenes = imagenes.length > 1;
 
-  /* Si hay una sola imagen no necesitamos flechas */
+  botonAnterior.hidden = !tieneVariasImagenes;
+  botonSiguiente.hidden = !tieneVariasImagenes;
 
-  if (imagenes.length === 1) {
-
-    botonAnterior.hidden = true;
-    botonSiguiente.hidden = true;
-
+  if (!tieneVariasImagenes) {
     return;
-
   }
 
-
-  /* ============================================
-     FLECHA ANTERIOR
-     ============================================ */
-
+  // Navegación mediante flechas
   botonAnterior.addEventListener('click', () => {
-
-    ventana.scrollBy({
-
-      left: -ventana.clientWidth,
-
-      behavior: 'smooth'
-
-    });
-
+    desplazarGaleria(ventana, -1);
   });
-
-
-  /* ============================================
-     FLECHA SIGUIENTE
-     ============================================ */
 
   botonSiguiente.addEventListener('click', () => {
-
-    ventana.scrollBy({
-
-      left: ventana.clientWidth,
-
-      behavior: 'smooth'
-
-    });
-
+    desplazarGaleria(ventana, 1);
   });
-
 }
 
 
 /* ============================================
-   PRECIO
+   4. NAVEGACIÓN DE GALERÍA
    ============================================ */
 
-function obtenerPrecioProducto(producto) {
-
-  const precioDesde =
-    String(producto.precio || '').trim();
-
-  const precioHasta =
-    String(producto.precio_hasta || '').trim();
-
-
-  /* Precio desde - hasta */
-
-  if (precioDesde && precioHasta) {
-
-    return `$ ${precioDesde} - $ ${precioHasta}`;
-
-  }
-
-
-  /* Precio único */
-
-  if (precioDesde) {
-
-    return `$ ${precioDesde}`;
-
-  }
-
-
-  return 'Consultar precio';
-
+/**
+ * Desplaza la galería una imagen hacia
+ * adelante o hacia atrás.
+ */
+function desplazarGaleria(ventana, direccion) {
+  ventana.scrollBy({
+    left: ventana.clientWidth * direccion,
+    behavior: 'smooth'
+  });
 }
 
 
 /* ============================================
-   ENTREGA
+   5. INFORMACIÓN DE ENTREGA
    ============================================ */
 
 function configurarEntrega(producto) {
-
   const elementoEntrega =
     document.getElementById('producto-entrega');
 
+  const entrega = normalizarTexto(producto.entrega);
 
-  const entrega =
-    normalizarTexto(producto.entrega);
-
-
+  // Entrega inmediata
   if (entrega === 'inmediata') {
-
     elementoEntrega.textContent =
       'Disponible para entrega inmediata.';
-
     return;
-
   }
 
-
+  // Entrega con plazo específico
   if (producto.entrega) {
-
     elementoEntrega.textContent =
       `Tiempo estimado de entrega: ${producto.entrega}.`;
-
     return;
-
   }
 
-
+  // Sin información de entrega
   elementoEntrega.textContent =
     'Consultanos por disponibilidad.';
-
 }
 
 
 /* ============================================
-   WHATSAPP
+   6. CONSULTA POR WHATSAPP
    ============================================ */
 
 function configurarWhatsApp(producto) {
+  const boton = document.getElementById('boton-whatsapp');
 
-  const boton =
-    document.getElementById('boton-whatsapp');
-
-
-  const telefono =
-    '59892066916';
-
+  const telefono = '59892066916';
 
   const mensaje =
     `Hola! Quería consultar por el producto ${producto.nombre}.`;
 
-
-  const urlWhatsApp =
+  boton.href =
     `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-
-
-  boton.href = urlWhatsApp;
-
-}
-
-
-/* ============================================
-   NORMALIZAR TEXTO
-   ============================================ */
-
-function normalizarTexto(texto) {
-
-  return String(texto || '')
-    .trim()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-
 }
