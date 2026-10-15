@@ -196,3 +196,37 @@ function obtenerPrecioProducto(producto) {
 
   return `$ ${desde}`;
 }
+
+/* ============================================
+   FUNCIONES COMPARTIDAS
+   ============================================ */
+
+// Normalizar textos de Google Sheets
+function normalizarTexto(texto) {
+  return String(texto || '')
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+
+// Crear tarjetas de productos
+function crearTarjetaProducto(producto) {
+  return `
+    <a
+      href="producto-detalle.html?id=${encodeURIComponent(producto.id)}"
+      class="tarjeta-producto"
+    >
+      <img
+        src="${producto.imagen}"
+        alt="${producto.nombre}"
+        loading="lazy"
+      >
+
+      <h3>${producto.nombre}</h3>
+
+      <p>${obtenerPrecioProducto(producto)}</p>
+    </a>
+  `;
+}

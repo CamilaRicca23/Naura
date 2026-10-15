@@ -963,3 +963,16 @@
 
 }
 
+
+
+/* ===== ANIMACIÓN DEL CARRUSEL DEL INICIO ===== */
+
+@keyframes moverHeroNaura {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
