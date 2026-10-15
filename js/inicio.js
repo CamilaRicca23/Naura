@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         <h3>${producto.nombre}</h3>
 
-        <p>$ ${producto.precio}</p>
+        <p> ${obtenerPrecioProducto(producto)}</p>
 
       </a>
     `;

@@ -238,7 +238,7 @@
     0 var(--espacio-xs) var(--espacio-sm);
 
   color: var(--color-bordo);
-
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
@@ -860,8 +860,10 @@
 
 .sobre-naura__bancos {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 320px));
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
 }
 
 .sobre-naura__banco {
@@ -875,6 +877,7 @@
 .sobre-naura__banco-identidad {
   display: flex;
   align-items: center;
+  
   gap: 15px;
   margin-bottom: 25px;
 }
@@ -918,13 +921,22 @@
   overflow-wrap: anywhere;
 }
 
+.sobre-naura__banco-info {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-bordo);
+  opacity: 0.7;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
 .sobre-naura__copiar {
   align-self: flex-start;
   padding: 10px 16px;
   background: transparent;
   border: 1px solid currentColor;
   border-radius: var(--radio-borde-chico);
-  color: var(--color-texto);
+  color: var(--color-bordo);
   font-family: var(--fuente-texto);
   font-size: 0.8rem;
   cursor: pointer;
@@ -1004,7 +1016,13 @@
 
 @media (max-width: 900px) {
 
-  .sobre-naura__bancos,
+  .sobre-naura__bancos{
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 450px;
+    margin: 0 auto;
+    gap: 16px;
+  }
+
   .sobre-naura__entregas {
     grid-template-columns: 1fr;
     max-width: 550px;
@@ -1284,5 +1302,12 @@
     line-height: 1.6;
   }
 
+  .sobre-naura__copiar {
+    border: 1px solid var(--color-bordo);
+    background-color: transparent;
+    color: var(--color-bordo);
+    appearance: none;
+    -webkit-appearance: none;
+  }
 
 }

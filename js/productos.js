@@ -59,13 +59,28 @@ function renderizarProductos(productos) {
 
   contenedor.innerHTML = productos.map(crearTarjetaProducto).join('');
 }
+function obtenerPrecioProducto(producto) {
+
+  const precioDesde = String(producto.precio || '').trim();
+  const precioHasta = String(producto.precio_hasta || '').trim();
+
+  if (precioDesde && precioHasta) {
+    return ` $${precioDesde} -  $${precioHasta}`;
+  }
+
+  if (precioDesde) {
+    return `$ ${precioDesde}`;
+  }
+
+  return 'Consultar precio';
+}
 
 function crearTarjetaProducto(producto) {
   return `
     <a href="producto-detalle.html?id=${producto.id}" class="tarjeta-producto">
       <img src="${producto.imagen}" alt="${producto.nombre}">
       <h3>${producto.nombre}</h3>
-      <p>$ ${producto.precio}</p>
+      <p> ${obtenerPrecioProducto(producto)}</p>
     </a>
   `;
 }

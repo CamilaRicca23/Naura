@@ -6,21 +6,17 @@
 
 const cuentasBancarias = [
   {
-    banco: 'Santander',
-    logo: 'img/santander-logo.jpg',
-    numero: '',
-    titular: 'Evelyn Ricca'
-  },
-  {
-    banco: 'Itaú',
+    banco: 'ITAU',
     logo: 'img/itau-logo.jpg',
-    numero: '',
+    numero: '7858970',
+    info: 'Cuenta en pesos',
     titular: 'Evelyn Ricca'
   },
   {
     banco: 'BROU',
     logo: 'img/brou-logo.jpg',
-    numero: '123',
+    numero: '110156357-00001',
+    info: 'Caja de ahorro en pesos',
     titular: 'Evelyn Ricca'
   }
 ];
@@ -50,8 +46,8 @@ function mostrarCuentasBancarias() {
           <div>
             <h3>${cuenta.banco}</h3>
             ${cuenta.titular
-              ? `<p>Titular: ${cuenta.titular}</p>`
-              : ''}
+        ? `<p>Titular: ${cuenta.titular}</p>`
+        : ''}
           </div>
         </div>
 
@@ -62,8 +58,12 @@ function mostrarCuentasBancarias() {
             </span>
 
             <p class="sobre-naura__banco-numero">
-              ${tieneNumero ? cuenta.numero : 'Próximamente'}
+              ${cuenta.numero}
             </p>
+            <p class="sobre-naura__banco-info">
+               ${cuenta.info}
+            </p>
+
           </div>
 
           <button
